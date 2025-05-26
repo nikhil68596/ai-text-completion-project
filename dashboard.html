@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Progress Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/danfojs@4.0.0/dist/danfo.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-danfo@1.0.2/dist/chartjs-adapter-danfo.min.js"></script>
+    <style>
+        canvas {
+            margin: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div id="studentProgressDashboard">
+        <!-- Charts will be rendered here -->
+    </div>
+    <script>
+        // Sample data for demonstration
+        const students = [
+            { name: 'Alice', score: [90, 80, 75, 85] },
+            { name: 'Bob', score: [92, 88, 70, 95] },
+            { name: 'Carol', score: [87, 72, 65, 78] },
+            // Add more student data here...
+        ];
+
+        const danfo = new Danfo.DataFrame();
+
+        students.forEach((student) => {
+            danfo.addColumn('Name', student.name);
+            danfo.addColumn('Score', student.score);
+        });
+
+        // Initialize the dashboard
+        const dashboard = new Dashboard({
+            target: '#studentProgressDashboard',
+            charts: [
+                {
+                    type: 'column',
+                    data: danfo,
+                    xKey: 'Name',
+                    yKey: 'Score',
+                    title: 'Student Progress Over Time',
+                }
+            ]
+        });
+
+        // Update the dashboard if new data is added dynamically
+        dashboard.updateCharts({
+            charts: [
+                {
+                    type: 'column',
+                    data: danfo, // Updated data frame
+                    xKey: 'Name',
+                    yKey: 'Score',
+                    title: 'Student Progress Over Time',
+                }
+            ]
+        });
+    </script>
+</body>
+</html>
